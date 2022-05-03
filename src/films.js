@@ -45,7 +45,6 @@ function orderByYear(movies) {
     if (a.title > b.title) {return 1;}
     return 0;
  }
-
  console.log('EXERCICE 5 ->', result);
  return result;
 }
@@ -56,27 +55,42 @@ function moviesAverageByCategory(movies,genre) {
   let average = films.map( (average) => average.score);
   let result = average.reduce( (acc, item) =>  { return acc = (acc + item ) / films.length});
   console.log('EXERCICE 6 ->', result.toFixed(2));
-    
+  return result; 
 }
 
 // Exercise 7: Modify the duration of movies to minutes
 function hoursToMinutes(movies) {
-  let newArray = [...movies];
-  let result = newArray.forEach(myFunction);
-  
-  function myFunction(item) {
-    let parts = item.duration;
-    let replaced = parts.replace(/h/,'').replace(/min/,' ');    
-    let hourToMinut = replaced[0] * 60
-    + Number( (replaced[2] + replaced[3])
-    );    
-    return (hourToMinut);
-  }; 
-	console.log('EXERCICE 6 ->', result)
+  let movies2 = movies.slice(0, movies.length); 
+  movies2.forEach(myFunction);  
+    function myFunction(movie) {      
+      let parts = movie.duration;        
+      if (parts.length > 2) {
+        let replaced = parts.replace(/h/,'').replace(/min/,' ');
+        movie.duration = Number(replaced[0]) * 60 + Number(replaced[2] + replaced[3]);
+      }else{
+        let replaced = parts.replace(/h/,'');
+        movie.duration = Number(replaced[0] * 60);
+      }         
+      return (movie.duration); 
+    }; 
+	console.log('EXERCICE 7 ->', movies2);
+  return movies2; 
 }
 
+
 // Exercise 8: Get the best film of a year
-function bestFilmOfYear() {}
+function bestFilmOfYear(movies,year) {
+  let years = movies.filter(movie => movie.year == year);  
+  let bestScore = years.sort(function (a, b) {
+      if (a.score < b.score) {return -1;}
+      if (a.score > b.score) {return 1;}
+      return 0;
+   }).reverse()
+  let result = [];
+  result.push(bestScore[0]);
+  console.log('EXERCICE 8 ->', bestScore[0]);
+  return result;
+}
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
